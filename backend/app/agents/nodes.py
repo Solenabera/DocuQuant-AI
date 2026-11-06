@@ -11,30 +11,63 @@ from .state import ExtractionState
 
 def get_llm(temperature: float = 0.0):
     """
-    Factory function returning the configured LLM instance with lazy instantiation.
-    Defaults to Google Gemini, with automatic fallback to Groq if configured.
+    Factory function returning the configured LLM instance with lazy instantiation
+    and automatic multi-model fallback chain to ensure high reliability.
     """
-    # 1. Google Gemini Provider
+    fallbacks = []
+
+    # 1. Prepare Groq fallback if configured with a real API key
+    groq_llm = None
+    if settings.GROQ_API_KEY and settings.GROQ_API_KEY != "your_groq_api_key_here":
+        try:
+            groq_llm = ChatGroq(
+                model_name=settings.GROQ_MODEL,
+                temperature=temperature,
+                api_key=settings.GROQ_API_KEY,
+            )
+        except Exception as e:
+            logger.warning(f"Failed to initialize ChatGroq fallback: {e}")
+
+    # 2. Google Gemini Provider with automatic candidate fallbacks
     if settings.DEFAULT_LLM_PROVIDER == "google" and settings.GOOGLE_API_KEY:
         try:
-            return ChatGoogleGenerativeAI(
+            primary_llm = ChatGoogleGenerativeAI(
                 model=settings.GEMINI_MODEL,
                 temperature=temperature,
                 google_api_key=settings.GOOGLE_API_KEY,
                 max_output_tokens=8192,
             )
+
+            # Build fallback chain for Gemini
+            candidate_models = ["gemini-3.5-flash", "gemini-3.5-flash-lite"]
+            for fb_model in candidate_models:
+                if fb_model != settings.GEMINI_MODEL:
+                    try:
+                        fallbacks.append(
+                            ChatGoogleGenerativeAI(
+                                model=fb_model,
+                                temperature=temperature,
+                                google_api_key=settings.GOOGLE_API_KEY,
+                                max_output_tokens=8192,
+                            )
+                        )
+                    except Exception:
+                        pass
+
+            if groq_llm:
+                fallbacks.append(groq_llm)
+
+            if fallbacks:
+                return primary_llm.with_fallbacks(fallbacks)
+            return primary_llm
         except Exception as e:
-            logger.warning(f"Failed to initialize ChatGoogleGenerativeAI: {e}. Checking Groq fallback...")
+            logger.warning(f"Failed to initialize primary ChatGoogleGenerativeAI: {e}. Checking fallback...")
 
-    # 2. Groq Fallback Provider
-    if settings.GROQ_API_KEY:
-        return ChatGroq(
-            model_name=settings.GROQ_MODEL,
-            temperature=temperature,
-            api_key=settings.GROQ_API_KEY,
-        )
+    # 3. Groq Fallback Provider
+    if groq_llm:
+        return groq_llm
 
-    # 3. Default Google attempt with env key
+    # 4. Default Google attempt with env key
     return ChatGoogleGenerativeAI(
         model=settings.GEMINI_MODEL,
         temperature=temperature,
