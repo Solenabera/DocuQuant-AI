@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { UploadResponse, TaskStatusResponse } from '@/types';
 
-export const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
-export const ROOT_BASE = API_BASE.replace(/\/api\/v1\/?$/, '');
+const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
+export const ROOT_BASE = rawApiUrl.replace(/\/api\/v1$/, '');
+export const API_BASE = `${ROOT_BASE}/api/v1`;
 export const API_DOCS_URL = `${ROOT_BASE}/docs`;
 
 const apiClient = axios.create({
