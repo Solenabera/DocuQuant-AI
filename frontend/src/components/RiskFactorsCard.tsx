@@ -1,7 +1,7 @@
 "use client";
 
 import { ShieldAlert, AlertCircle, ShieldCheck } from "lucide-react";
-import { getRiskSeverity } from "@/lib/utils";
+import { getRiskSeverity } from "@/library/utils";
 
 interface RiskFactorsCardProps {
   risks: string[];
@@ -24,7 +24,7 @@ export function RiskFactorsCard({ risks }: RiskFactorsCardProps) {
 
   return (
     <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-7 shadow-lg shadow-slate-200/50 flex flex-col h-full transition-all">
-      
+
       {/* Header */}
       <div className="flex items-center justify-between mb-5 pb-4 border-b border-slate-100">
         <div>

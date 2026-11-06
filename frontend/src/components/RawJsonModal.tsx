@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { X, Copy, Check, Download, Terminal } from "lucide-react";
 import { ExtractionResult } from "@/types";
-import { exportSummaryAsJSON } from "@/lib/utils";
+import { exportSummaryAsJSON } from "@/library/utils";
 
 interface RawJsonModalProps {
   isOpen: boolean;

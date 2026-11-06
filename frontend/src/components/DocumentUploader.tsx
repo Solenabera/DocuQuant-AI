@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { FileUp, FileText, X, Play, Sparkles, CheckCircle2, ShieldCheck, ArrowRight } from "lucide-react";
-import { formatBytes } from "@/lib/utils";
+import { formatBytes } from "@/library/utils";
 import { DEMO_PRESETS } from "@/hooks/useExtraction";
 
 interface DocumentUploaderProps {
@@ -46,7 +46,7 @@ export function DocumentUploader({
 
   return (
     <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-lg shadow-slate-200/50 transition-all hover:border-slate-300/80">
-      
+
       {/* Header and Quick Demo Presets */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
         <div>
@@ -90,13 +90,12 @@ export function DocumentUploader({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`relative cursor-pointer rounded-2xl border-2 border-dashed p-8 sm:p-10 text-center transition-all ${
-          isDragging
+        className={`relative cursor-pointer rounded-2xl border-2 border-dashed p-8 sm:p-10 text-center transition-all ${isDragging
             ? "border-indigo-500 bg-indigo-50/70 scale-[1.005]"
             : file
-            ? "border-emerald-300 bg-emerald-50/40 hover:border-emerald-400"
-            : "border-slate-300 bg-slate-50/60 hover:border-indigo-400 hover:bg-slate-50/90"
-        }`}
+              ? "border-emerald-300 bg-emerald-50/40 hover:border-emerald-400"
+              : "border-slate-300 bg-slate-50/60 hover:border-indigo-400 hover:bg-slate-50/90"
+          }`}
       >
         <input
           ref={fileInputRef}

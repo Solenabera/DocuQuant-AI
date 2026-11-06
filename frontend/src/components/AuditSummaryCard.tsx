@@ -2,7 +2,7 @@
 
 import { Building2, Calendar, RefreshCw, Code2, Download, ShieldAlert, BarChart3, AlertOctagon, ShieldCheck } from "lucide-react";
 import { ExtractionResult } from "@/types";
-import { exportMetricsToCSV, exportSummaryAsJSON } from "@/lib/utils";
+import { exportMetricsToCSV, exportSummaryAsJSON } from "@/library/utils";
 
 interface AuditSummaryCardProps {
   result: ExtractionResult;
@@ -27,14 +27,13 @@ export function AuditSummaryCard({
 
   return (
     <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-lg shadow-slate-200/50 transition-all">
-      
+
       {/* Top Banner Status */}
       <div
-        className={`p-5 rounded-2xl border flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-6 transition-all ${
-          is_approved
+        className={`p-5 rounded-2xl border flex flex-col lg:flex-row lg:items-center justify-between gap-5 mb-6 transition-all ${is_approved
             ? "bg-gradient-to-r from-emerald-50 via-teal-50/40 to-white border-emerald-200/90 text-emerald-950 shadow-2xs"
             : "bg-gradient-to-r from-amber-50 via-yellow-50/40 to-white border-amber-200/90 text-amber-950 shadow-2xs"
-        }`}
+          }`}
       >
         <div className="flex items-start sm:items-center space-x-4">
           {is_approved ? (
@@ -85,7 +84,7 @@ export function AuditSummaryCard({
             <Download className="w-3.5 h-3.5 mr-1.5 text-purple-600" />
             Save JSON
           </button>
-          
+
           <button
             type="button"
             onClick={onOpenJson}
@@ -108,7 +107,7 @@ export function AuditSummaryCard({
 
       {/* Target Document Details Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        
+
         {/* Company Card */}
         <div className="bg-slate-50/80 border border-slate-200/90 rounded-2xl p-4 flex items-center space-x-3.5 shadow-2xs">
           <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">

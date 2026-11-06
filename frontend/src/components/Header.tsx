@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ShieldCheck, Cpu, BookOpen, Sparkles, ExternalLink } from "lucide-react";
-import { checkHealth, API_DOCS_URL } from "@/lib/api";
+import { checkHealth, API_DOCS_URL } from "@/library/api";
 
 export function Header() {
   const [isBackendHealthy, setIsBackendHealthy] = useState<boolean | null>(null);
@@ -75,10 +75,10 @@ export function Header() {
             {/* Live Backend Status Badge */}
             <div
               className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${isBackendHealthy === true
-                  ? "bg-emerald-50 text-emerald-700 border-emerald-200 shadow-xs"
-                  : isBackendHealthy === false
-                    ? "bg-rose-50 text-rose-700 border-rose-200 shadow-xs"
-                    : "bg-slate-100 text-slate-600 border-slate-200"
+                ? "bg-emerald-50 text-emerald-700 border-emerald-200 shadow-xs"
+                : isBackendHealthy === false
+                  ? "bg-rose-50 text-rose-700 border-rose-200 shadow-xs"
+                  : "bg-slate-100 text-slate-600 border-slate-200"
                 }`}
             >
               <span className="relative flex h-2 w-2">
@@ -87,10 +87,10 @@ export function Header() {
                 )}
                 <span
                   className={`relative inline-flex rounded-full h-2 w-2 ${isBackendHealthy === true
-                      ? "bg-emerald-500"
-                      : isBackendHealthy === false
-                        ? "bg-rose-500"
-                        : "bg-slate-400"
+                    ? "bg-emerald-500"
+                    : isBackendHealthy === false
+                      ? "bg-rose-500"
+                      : "bg-slate-400"
                     }`}
                 />
               </span>

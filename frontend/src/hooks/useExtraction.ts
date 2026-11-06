@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { isAxiosError } from "axios";
-import { uploadDocument, checkTaskStatus } from "@/lib/api";
+import { uploadDocument, checkTaskStatus } from "@/library/api";
 import { ExtractionStatus, ExtractionResult, DemoPreset } from "@/types";
 
 export const DEMO_PRESETS: DemoPreset[] = [
