@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { isAxiosError } from "axios";
-import { uploadDocument, checkTaskStatus } from "@/library/api";
+import { uploadDocument, checkTaskStatus, ROOT_BASE } from "@/library/api";
 import { ExtractionStatus, ExtractionResult, DemoPreset } from "@/types";
 
 export const DEMO_PRESETS: DemoPreset[] = [
@@ -310,8 +310,7 @@ export function useExtraction() {
       let msg = "Failed to upload document to server.";
       if (isAxiosError(err)) {
         if (!err.response) {
-          msg =
-            "Backend server is unreachable at http://localhost:8000. Please ensure the backend container is running (e.g. 'docker compose up -d'). Alternatively, click any of the Demo Presets above to test the pipeline.";
+          msg = `Backend server is unreachable at ${ROOT_BASE}. Please verify your network connection or Render service status. Alternatively, click any Demo Preset above.`;
         } else {
           msg = err.response.data?.detail || err.message || msg;
         }

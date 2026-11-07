@@ -49,8 +49,9 @@ app.add_middleware(
 # Root level health and info endpoints
 app.include_router(health_router, prefix="", tags=["System"])
 
-# API V1 Router
+# API V1 Router (canonical /api/v1) and root fallback (/extract, /status)
 app.include_router(api_router, prefix=settings.API_V1_STR)
+app.include_router(api_router, prefix="", include_in_schema=False)
 
 
 @app.get("/api/v1/docs", include_in_schema=False)

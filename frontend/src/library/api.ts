@@ -15,7 +15,7 @@ export const uploadDocument = async (file: File): Promise<UploadResponse> => {
   const formData = new FormData();
   formData.append('file', file);
 
-  const response = await apiClient.post<UploadResponse>('/extract', formData, {
+  const response = await apiClient.post<UploadResponse>(`${API_BASE}/extract`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 
@@ -23,7 +23,7 @@ export const uploadDocument = async (file: File): Promise<UploadResponse> => {
 };
 
 export const checkTaskStatus = async (taskId: string): Promise<TaskStatusResponse> => {
-  const response = await apiClient.get<TaskStatusResponse>(`/status/${taskId}`, {
+  const response = await apiClient.get<TaskStatusResponse>(`${API_BASE}/status/${taskId}`, {
     timeout: 10000,
   });
   return response.data;
